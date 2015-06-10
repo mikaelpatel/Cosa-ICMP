@@ -25,7 +25,7 @@ int
 ICMP::ping_request(uint8_t dest[4])
 {
   // Check given socket
-  if (m_sock == NULL) return (ENOTSOCK);
+  if (UNLIKELY(m_sock == NULL)) return (ENOTSOCK);
 
   // Build echo request block
   header_t req;
@@ -39,7 +39,7 @@ ICMP::ping_request(uint8_t dest[4])
 
   // And send to destination network address
   int res = m_sock->send(&req, sizeof(req), dest, 0);
-  if (res < 0) return (res);
+  if (UNLIKELY(res < 0)) return (res);
   return (res == sizeof(req) ? 0 : -1);
 }
 
@@ -47,7 +47,7 @@ int
 ICMP::ping_await(uint16_t timeout)
 {
   // Check given socket
-  if (m_sock == NULL) return (ENOTSOCK);
+  if (UNLIKELY(m_sock == NULL)) return (ENOTSOCK);
   header_t reply;
   uint8_t src[4];
   uint16_t port;

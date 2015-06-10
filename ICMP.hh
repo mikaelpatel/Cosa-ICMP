@@ -49,7 +49,7 @@ public:
    */
   ~ICMP()
   {
-    if (m_sock == NULL) return;
+    if (UNLIKELY(m_sock == NULL)) return;
     m_sock->close();
   }
 
@@ -63,7 +63,7 @@ public:
   int ping(uint8_t dest[4], uint16_t timeout = DEFAULT_TIMEOUT)
   {
     int res = ping_request(dest);
-    if (res < 0) return (res);
+    if (UNLIKELY(res < 0)) return (res);
     return (ping_await(timeout));
   }
 
