@@ -66,14 +66,14 @@ static const uint8_t mac[6] __PROGMEM = { MAC };
 W5100 ethernet(mac);
 
 // Wall-clock
-Clock clock;
+RTC::Clock clock;
 
 void setup()
 {
   uart.begin(9600);
   trace.begin(&uart, PSTR("CosaICMPping: started"));
   Watchdog::begin();
-  RTC::begin(&clock);
+  RTC::begin();
 
   uint8_t ip[4] = { IP };
   uint8_t subnet[4] = { SUBNET };
