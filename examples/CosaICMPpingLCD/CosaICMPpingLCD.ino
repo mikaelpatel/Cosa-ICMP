@@ -40,7 +40,7 @@
 #include <ICMP.h>
 #include <W5100.h>
 
-#include "Cosa/RTC.hh"
+#include "Cosa/RTT.hh"
 #include "Cosa/Watchdog.hh"
 #include "Cosa/IOStream.hh"
 
@@ -100,7 +100,7 @@ void setup()
 
   // Initiate necessary components
   Watchdog::begin();
-  RTC::begin();
+  RTT::begin();
   lcd.begin();
 
   // Start the ethernet controller

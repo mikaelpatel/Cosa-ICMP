@@ -39,7 +39,7 @@
 #include <ICMP.h>
 #include <W5100.h>
 
-#include "Cosa/RTC.hh"
+#include "Cosa/RTT.hh"
 #include "Cosa/Clock.hh"
 #include "Cosa/Watchdog.hh"
 #include "Cosa/Trace.hh"
@@ -66,14 +66,14 @@ static const uint8_t mac[6] __PROGMEM = { MAC };
 W5100 ethernet(mac);
 
 // Wall-clock
-RTC::Clock clock;
+RTT::Clock clock;
 
 void setup()
 {
   uart.begin(9600);
   trace.begin(&uart, PSTR("CosaICMPping: started"));
   Watchdog::begin();
-  RTC::begin();
+  RTT::begin();
 
   uint8_t ip[4] = { IP };
   uint8_t subnet[4] = { SUBNET };

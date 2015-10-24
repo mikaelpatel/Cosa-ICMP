@@ -19,7 +19,7 @@
  */
 
 #include "ICMP.hh"
-#include "Cosa/RTC.hh"
+#include "Cosa/RTT.hh"
 
 int
 ICMP::ping_request(uint8_t dest[4])
@@ -34,7 +34,7 @@ ICMP::ping_request(uint8_t dest[4])
   req.checksum = 0;
   req.echo.id = m_id;
   req.echo.seq = ++m_seq;
-  req.timestamp = RTC::millis();
+  req.timestamp = RTT::millis();
   req.checksum = hton(INET::checksum(&req, sizeof(req)));
 
   // And send to destination network address
@@ -71,5 +71,5 @@ ICMP::ping_await(uint16_t timeout)
       || (reply.echo.seq != m_seq)
       || (INET::checksum(&reply, sizeof(reply)) != 0))
     return (ENXIO);
-  return (RTC::millis() - reply.timestamp);
+  return (RTT::millis() - reply.timestamp);
 }
