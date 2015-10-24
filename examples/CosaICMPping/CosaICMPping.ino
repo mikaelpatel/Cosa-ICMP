@@ -57,9 +57,9 @@ OutputPin sd(Board::D4, 1);
 static const uint8_t mac[6] __PROGMEM = { MAC };
 #define IP 192,168,1,150
 #define SUBNET 255,255,255,0
-//#define LOCALHOST 192,168,1,102
+#define LOCALHOST 192,168,1,1
 #define GATEWAY 90,225,25,129
-//#define DNS 195,67,199,21
+#define DNS 195,67,199,21
 #define DEST GATEWAY
 
 // W5100 Ethernet Controller
@@ -78,14 +78,18 @@ void setup()
   uint8_t ip[4] = { IP };
   uint8_t subnet[4] = { SUBNET };
   ASSERT(ethernet.begin(ip, subnet));
+
+  sleep(1);
 }
 
 void loop()
 {
   ICMP icmp(ethernet.socket(Socket::IPRAW, IPPROTO_ICMP));
   static uint16_t icmp_seq = 1;
+
   uint8_t dest[4] = { DEST };
   int res = icmp.ping(dest);
+
   trace << clock.time() << ':';
   INET::print_addr(trace, dest);
   if (res < 0) {
@@ -97,5 +101,9 @@ void loop()
 	  << endl;
   }
   icmp_seq += 1;
+  trace << flush;
+
+  uint8_t mode = Power::set(SLEEP_MODE_EXT_STANDBY);
   sleep(10);
+  Power::set(mode);
 }
