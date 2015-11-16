@@ -38,7 +38,9 @@
 #include <DNS.h>
 #include <DHCP.h>
 #include <ICMP.h>
+#include <W5X00.h>
 #include <W5100.h>
+// #include <W5200.h>
 
 #include "Cosa/RTT.hh"
 #include "Cosa/Watchdog.hh"
@@ -91,6 +93,9 @@ OutputPin sd(Board::D4, 1);
 // W5100 Ethernet Controller
 static const uint8_t mac[6] __PROGMEM = { MAC };
 W5100 ethernet(mac);
+
+// W5200 Ethernet Controller
+// W5200 ethernet(mac);
 
 void setup()
 {
